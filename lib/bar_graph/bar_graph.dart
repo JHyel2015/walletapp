@@ -1,6 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:walletapp/bar_graph/bar_Data.dart';
+import 'package:walletapp/bar_graph/bar_data.dart';
 
 class MyBarGraph extends StatelessWidget {
   final double? maxY;
@@ -115,7 +115,7 @@ Widget getBottomTitles(double value, TitleMeta meta) {
   }
 
   return SideTitleWidget(
-    child: text,
     axisSide: meta.axisSide,
+    child: text,
   );
 }

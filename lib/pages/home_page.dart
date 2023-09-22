@@ -11,6 +11,9 @@ import 'package:walletapp/util/my_button.dart';
 import 'package:walletapp/util/my_card.dart';
 import 'package:walletapp/util/my_list_tile.dart';
 
+import '../util/my_action_button.dart';
+import '../util/my_expandable_fab.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -24,6 +27,14 @@ class _HomePageState extends State<HomePage> {
   // TextController
   final newExpenseNameController = TextEditingController();
   final newExpenseAmountController = TextEditingController(text: '0.0');
+  final newExpenseDateController = TextEditingController();
+  final newExpenseStatusController = TextEditingController();
+  final newExpenseCategoryController = TextEditingController();
+  final newExpenseTypeController = TextEditingController();
+  final newExpenseBankController = TextEditingController();
+  final newExpenseRecurrentController = TextEditingController();
+  final newExpenseRepeatedController = TextEditingController();
+  final newExpenseIgnoredController = TextEditingController();
 
   bool _btnActive = false;
 
@@ -96,6 +107,13 @@ class _HomePageState extends State<HomePage> {
             ? '0'
             : newExpenseAmountController.text,
         dateTime: DateTime.now(),
+        status: newExpenseStatusController.text.toLowerCase() == 'true',
+        categoryId: int.parse(newExpenseCategoryController.text),
+        type: int.parse(newExpenseTypeController.text),
+        bankId: int.parse(newExpenseBankController.text),
+        recurrent: newExpenseRecurrentController.text.toLowerCase() == 'true',
+        repeated: newExpenseRepeatedController.text.toLowerCase() == 'true',
+        ignored: newExpenseIgnoredController.text.toLowerCase() == 'true',
       );
       Provider.of<ExpenseData>(context, listen: false)
           .addNewExpense(newExpense);
@@ -117,18 +135,49 @@ class _HomePageState extends State<HomePage> {
     newExpenseAmountController.clear();
   }
 
+  static const _actionTitles = ['Ingreso', 'Gasto Tarjeta', 'Gasto'];
+
+  void _showAction(BuildContext context, int index) {
+    showDialog<void>(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          content: Text(_actionTitles[index]),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('CLOSE'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<ExpenseData>(
       builder: (context, value, child) => Scaffold(
         backgroundColor: Colors.grey[300],
-        floatingActionButton: FloatingActionButton(
-          onPressed: addNewExpense,
-          backgroundColor: Colors.pink,
-          child: Icon(
-            Icons.monetization_on,
-            size: 32,
-          ),
+        floatingActionButton: MyExpandableFab(
+          distance: 112,
+          children: [
+            MyActionButton(
+              onPressed: () => _showAction(context, 0),
+              icon: const Icon(Icons.trending_up),
+              text: Text(_actionTitles[0]),
+            ),
+            MyActionButton(
+              onPressed: () => _showAction(context, 1),
+              icon: const Icon(Icons.credit_card),
+              text: Text(_actionTitles[1]),
+            ),
+            MyActionButton(
+              onPressed: () => _showAction(context, 2),
+              icon: const Icon(Icons.trending_down),
+              text: Text(_actionTitles[2]),
+            ),
+          ],
         ),
         floatingActionButtonLocation:
             FloatingActionButtonLocation.miniCenterDocked,

@@ -13,7 +13,14 @@ class HiveDatabase {
       List<dynamic> expenseFormatted = [
         expense.name,
         expense.amount,
-        expense.dateTime
+        expense.dateTime,
+        expense.status,
+        expense.categoryId,
+        expense.type,
+        expense.bankId,
+        expense.recurrent,
+        expense.repeated,
+        expense.ignored,
       ];
       allExpensesFormatted.add(expenseFormatted);
     }
@@ -30,11 +37,25 @@ class HiveDatabase {
       String name = savedExpenses[i][0];
       String amount = savedExpenses[i][1];
       DateTime dateTime = savedExpenses[i][2];
+      bool status = savedExpenses[i][3];
+      int categoryId = savedExpenses[i][4];
+      int type = savedExpenses[i][5];
+      int bankId = savedExpenses[i][6];
+      bool recurrent = savedExpenses[i][7];
+      bool repeated = savedExpenses[i][8];
+      bool ignored = savedExpenses[i][9];
 
       ExpenseItem expense = ExpenseItem(
         name: name,
         amount: amount == '' ? '0' : amount,
         dateTime: dateTime,
+        status: status,
+        categoryId: categoryId,
+        type: type,
+        bankId: bankId,
+        recurrent: recurrent,
+        repeated: repeated,
+        ignored: ignored,
       );
 
       allExpenses.add(expense);

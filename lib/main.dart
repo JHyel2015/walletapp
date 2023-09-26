@@ -21,9 +21,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (context) => ExpenseData(),
-      builder: (context, child) => const MaterialApp(
+      builder: (context, child) => MaterialApp(
+        // theme: ThemeData().copyWith(useMaterial3: true),
         debugShowCheckedModeBanner: false,
-        home: HomePage(),
+        home: const HomePage(),
+        routes: {
+          '/homepage': (context) => const HomePage(),
+        },
       ),
     );
   }

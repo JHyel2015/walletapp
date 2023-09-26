@@ -135,7 +135,7 @@ class _HomePageState extends State<HomePage> {
     newExpenseAmountController.clear();
   }
 
-  static const _actionTitles = ['Ingreso', 'Gasto Tarjeta', 'Gasto'];
+  static const _actionTitles = ['Ingreso', 'Tarjeta', 'Gasto'];
 
   void _showAction(BuildContext context, int index) {
     showDialog<void>(
@@ -160,7 +160,7 @@ class _HomePageState extends State<HomePage> {
       builder: (context, value, child) => Scaffold(
         backgroundColor: Colors.grey[300],
         floatingActionButton: MyExpandableFab(
-          distance: 112,
+          distance: 90,
           children: [
             MyActionButton(
               onPressed: () => _showAction(context, 0),
@@ -189,7 +189,13 @@ class _HomePageState extends State<HomePage> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    if (ModalRoute.of(context)?.settings.name != '/homepage') {
+                      Navigator.pushNamedAndRemoveUntil(
+                          context, '/homepage', ModalRoute.withName('/'));
+                    }
+                    // Navigator.pushNamed(context, '/homepage');
+                  },
                   icon: Icon(
                     Icons.home,
                     size: 32,

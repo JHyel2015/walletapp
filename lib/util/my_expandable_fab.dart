@@ -61,14 +61,17 @@ class _MyExpandableFabState extends State<MyExpandableFab>
   @override
   Widget build(BuildContext context) {
     return SizedBox.expand(
-      child: Stack(
-        alignment: Alignment.bottomCenter,
-        clipBehavior: Clip.none,
-        children: [
-          _buildTapToCloseFab(),
-          ..._buildExpandingActionButtons(),
-          _buildTapToOpenFab(),
-        ],
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 30.0),
+        child: Stack(
+          alignment: Alignment.bottomCenter,
+          clipBehavior: Clip.none,
+          children: [
+            _buildTapToCloseFab(),
+            ..._buildExpandingActionButtons(),
+            _buildTapToOpenFab(),
+          ],
+        ),
       ),
     );
   }
